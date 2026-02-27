@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Content Editor - Joy of Learning</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F6F2EA;
+      color: #2A2A2A;
+      line-height: 1.6;
+    }
+    
+    .header {
+      background: #C15C39;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    
+    .header p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-top: 5px;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .section {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    
+    .section h2 {
+      color: #C15C39;
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #F6F2EA;
+    }
+    
+    .field-group {
+      margin-bottom: 20px;
+    }
+    
+    .field-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #6E6A5C;
+      font-size: 0.85rem;
+    }
+    
+    .field-group input,
+    .field-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #E9E5DD;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.3s;
+    }
+    
+    .field-group input:focus,
+    .field-group textarea:focus {
+      outline: none;
+      border-color: #C15C39;
+    }
+    
+    .field-group textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    
+    .lang-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    
+    .lang-tab {
+      padding: 6px 16px;
+      border: 2px solid #E9E5DD;
+      background: white;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    
+    .lang-tab.active {
+      background: #C15C39;
+      color: white;
+      border-color: #C15C39;
+    }
+    
+    .lang-content {
+      display: none;
+    }
+    
+    .lang-content.active {
+      display: block;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+    
+    .btn-primary {
+      background: #C15C39;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #A84D2F;
+      transform: translateY(-2px);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: #C15C39;
+      border: 2px solid #C15C39;
+    }
+    
+    .btn-secondary:hover {
+      background: #C15C39;
+      color: white;
+    }
+    
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 2px solid #F6F2EA;
+    }
+    
+    .notice {
+      background: #E9F3EE;
+      border-left: 4px solid #7BA88C;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .notice h3 {
+      color: #2A2A2A;
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+    
+    .notice p {
+      color: #6E6A5C;
+      font-size: 0.9rem;
+    }
+    
+    .notice code {
+      background: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    
+    .output {
+      background: #2A2A2A;
+      color: #7BA88C;
+      padding: 20px;
+      border-radius: 12px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      margin-top: 20px;
+      display: none;
+    }
+    
+    .output.show {
+      display: block;
+    }
+    
+    .image-upload {
+      border: 2px dashed #E9E5DD;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .image-upload:hover {
+      border-color: #C15C39;
+      background: #FFF8F5;
+    }
+    
+    .image-upload p {
+      color: #6E6A5C;
+      margin-top: 10px;
+    }
+    
+    .tabs {
+      display: flex;
+      gap: 4px;
+      background: #F6F2EA;
+      padding: 4px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    
+    .tab.active {
+      background: white;
+      color: #C15C39;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    @media (max-width: 600px) {
+      .container {
+        padding: 12px;
+      }
+      
+      .section {
+        padding: 16px;
+      }
+      
+      .actions {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🌱 Joy of Learning - Content Editor</h1>
+    <p>Simple editor for updating website content</p>
+  </div>
+  
+  <div class="container">
+    <div class="notice">
+      <h3>📋 How to Use This Editor</h3>
+      <p>1. Edit the text fields below (English and Hindi)</p>
+      <p>2. Click "Generate JSON" to create the content file</p>
+      <p>3. Copy the generated JSON and save it as <code>src/data/content.json</code></p>
+      <p>4. Run <code>npm run build</code> and re-upload to Netlify</p>
+    </div>
+    
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('hero')">Hero</div>
+      <div class="tab" onclick="showTab('philosophy')">Philosophy</div>
+      <div class="tab" onclick="showTab('organic')">Organic</div>
+      <div class="tab" onclick="showTab('footer')">Footer</div>
+    </div>
+    
+    <!-- Hero Section -->
+    <div id="hero" class="tab-content active">
+      <div class="section">
+        <h2>Hero Section (Homepage)</h2>
+        
+        <div class="field-group">
+          <label>Headline - English</label>
+          <input type="text" id="hero-headline-en" value="Soil is Life">
+        </div>
+        
+        <div class="field-group">
+          <label>Headline - Hindi</label>
+          <input type="text" id="hero-headline-hi" value="मिट्टी में है जान">
+        </div>
+        
+        <div class="field-group">
+          <label>Subheadline - English</label>
+          <textarea id="hero-subheadline-en">A quiet return to the wisdom beneath our feet.</textarea>
+        </div>
+        
+        <div class="field-group">
+          <label>Subheadline - Hindi</label>
+          <textarea id="hero-subheadline-hi">अपनी माँ प्रकृति की शरण में फिर लौटना।</textarea>
+        </div>
+        
+        <div class="field-group">
+          <label>Primary Button - English</label>
+          <input type="text" id="hero-cta1-en" value="Explore the Journey">
+        </div>
+        
+        <div class="field-group">
+          <label>Primary Button - Hindi</label>
+          <input type="text" id="hero-cta1-hi" value="यात्रा शुरू करें">
+        </div>
+        
+        <div class="field-group">
+          <label>Secondary Button - English</label>
+          <input type="text" id="hero-cta2-en" value="Support the Foundation">
+        </div>
+        
+        <div class="field-group">
+          <label>Secondary Button - Hindi</label>
+          <input type="text" id="hero-cta2-hi" value="फाउंडेशन को सहयोग दें">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Philosophy Section -->
+    <div id="philosophy" class="tab-content">
+      <div class="section">
+        <h2>Philosophy Section</h2>
+        
+        <div class="field-group">
+          <label>Label - English</label>
+          <input type="text" id="philosophy-label-en" value="OUR PHILOSOPHY">
+        </div>
+        
+        <div class="field-group">
+          <label>Label - Hindi</label>
+          <input type="text" id="philosophy-label-hi" value="हमारी दर्शन">
+        </div>
+        
+        <div class="field-group">
+          <label>Headline - English</label>
+          <input type="text" id="philosophy-headline-en" value="The Living Soil">
+        </div>
+        
+        <div class="field-group">
+          <label>Headline - Hindi</label>
+          <input type="text" id="philosophy-headline-hi" value="जीवित मिट्टी">
+        </div>
+        
+        <div class="field-group">
+          <label>Body Text - English</label>
+          <textarea id="philosophy-body-en">Healthy soil is the beginning of healthy food, healthy people, and a stable climate. We help communities farm in ways that restore the land—naturally.</textarea>
+        </div>
+        
+        <div class="field-group">
+          <label>Body Text - Hindi</label>
+          <textarea id="philosophy-body-hi">स्वस्थ मिट्टी स्वस्थ भोजन, स्वस्थ लोगों और स्थिर जलवायु की शुरुआत है। हम समुदायों को प्राकृतिक तरीके से भूमि को बहाल करने वाली खेती करने में मदद करते हैं।</textarea>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Organic Section -->
+    <div id="organic" class="tab-content">
+      <div class="section">
+        <h2>Organic Farming Section</h2>
+        
+        <div class="field-group">
+          <label>Label - English</label>
+          <input type="text" id="organic-label-en" value="DEFINITION">
+        </div>
+        
+        <div class="field-group">
+          <label>Label - Hindi</label>
+          <input type="text" id="organic-label-hi" value="परिभाषा">
+        </div>
+        
+        <div class="field-group">
+          <label>Headline - English</label>
+          <input type="text" id="organic-headline-en" value="What is Organic Farming?">
+        </div>
+        
+        <div class="field-group">
+          <label>Headline - Hindi</label>
+          <input type="text" id="organic-headline-hi" value="जैविक खेती क्या है?">
+        </div>
+        
+        <div class="field-group">
+          <label>Body Text - English</label>
+          <textarea id="organic-body-en">Farming without synthetic fertilizers and poisons—using nature's cycles to grow food that is safe, tasty, and nourishing.</textarea>
+        </div>
+        
+        <div class="field-group">
+          <label>Body Text - Hindi</label>
+          <textarea id="organic-body-hi">सिंथेटिक उर्वरकों और जहरों के बिना खेती—प्रकृति के चक्रों का उपयोग करके सुरक्षित, स्वादिष्ट और पौष्टिक भोजन उगाना।</textarea>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Footer Section -->
+    <div id="footer" class="tab-content">
+      <div class="section">
+        <h2>Footer Section</h2>
+        
+        <div class="field-group">
+          <label>Headline - English</label>
+          <input type="text" id="footer-headline-en" value="Join the Movement">
+        </div>
+        
+        <div class="field-group">
+          <label>Headline - Hindi</label>
+          <input type="text" id="footer-headline-hi" value="आंदोलन में शामिल हों">
+        </div>
+        
+        <div class="field-group">
+          <label>Body Text - English</label>
+          <textarea id="footer-body-en">Whether you are a farmer, a gardener, a student, or a supporter—there is a place for you in this journey back to living soil.</textarea>
+        </div>
+        
+        <div class="field-group">
+          <label>Body Text - Hindi</label>
+          <textarea id="footer-body-hi">चाहे आप किसान हों, बागवान, छात्र या समर्थक—जीवित मिट्टी की इस यात्रा में आपके लिए एक स्थान है।</textarea>
+        </div>
+        
+        <div class="field-group">
+          <label>Email</label>
+          <input type="email" id="footer-email" value="hello@joyoflearning.co.in">
+        </div>
+        
+        <div class="field-group">
+          <label>Location - English</label>
+          <input type="text" id="footer-location-en" value="Field programs across India">
+        </div>
+        
+        <div class="field-group">
+          <label>Location - Hindi</label>
+          <input type="text" id="footer-location-hi" value="भारत भर में क्षेत्र कार्यक्रम">
+        </div>
+      </div>
+    </div>
+    
+    <div class="actions">
+      <button class="btn btn-primary" onclick="generateJSON()">
+        📄 Generate JSON
+      </button>
+      <button class="btn btn-secondary" onclick="copyJSON()">
+        📋 Copy to Clipboard
+      </button>
+      <button class="btn btn-secondary" onclick="downloadJSON()">
+        💾 Download File
+      </button>
+    </div>
+    
+    <pre id="output" class="output"></pre>
+  </div>
+  
+  <script>
+    function showTab(tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Show selected tab
+      document.getElementById(tabName).classList.add('active');
+      event.target.classList.add('active');
+    }
+    
+    function generateJSON() {
+      const content = {
+        site: {
+          title: "Joy of Learning Foundation",
+          description: "Promoting organic farming and soil health education",
+          url: "https://joyoflearning.co.in"
+        },
+        hero: {
+          headline: {
+            en: document.getElementById('hero-headline-en').value,
+            hi: document.getElementById('hero-headline-hi').value
+          },
+          subheadline: {
+            en: document.getElementById('hero-subheadline-en').value,
+            hi: document.getElementById('hero-subheadline-hi').value
+          },
+          ctaPrimary: {
+            en: document.getElementById('hero-cta1-en').value,
+            hi: document.getElementById('hero-cta1-hi').value
+          },
+          ctaSecondary: {
+            en: document.getElementById('hero-cta2-en').value,
+            hi: document.getElementById('hero-cta2-hi').value
+          },
+          backgroundImage: "/hero_landscape.jpg"
+        },
+        philosophy: {
+          label: {
+            en: document.getElementById('philosophy-label-en').value,
+            hi: document.getElementById('philosophy-label-hi').value
+          },
+          headline: {
+            en: document.getElementById('philosophy-headline-en').value,
+            hi: document.getElementById('philosophy-headline-hi').value
+          },
+          body: {
+            en: document.getElementById('philosophy-body-en').value,
+            hi: document.getElementById('philosophy-body-hi').value
+          },
+          backgroundImage: "/scene_mudhouse.jpg"
+        },
+        organic: {
+          label: {
+            en: document.getElementById('organic-label-en').value,
+            hi: document.getElementById('organic-label-hi').value
+          },
+          headline: {
+            en: document.getElementById('organic-headline-en').value,
+            hi: document.getElementById('organic-headline-hi').value
+          },
+          body: {
+            en: document.getElementById('organic-body-en').value,
+            hi: document.getElementById('organic-body-hi').value
+          },
+          backgroundImage: "/scene_cowshelter.jpg"
+        },
+        footer: {
+          headline: {
+            en: document.getElementById('footer-headline-en').value,
+            hi: document.getElementById('footer-headline-hi').value
+          },
+          body: {
+            en: document.getElementById('footer-body-en').value,
+            hi: document.getElementById('footer-body-hi').value
+          },
+          email: document.getElementById('footer-email').value,
+          location: {
+            en: document.getElementById('footer-location-en').value,
+            hi: document.getElementById('footer-location-hi').value
+          },
+          backgroundImage: "/closing_landscape.jpg"
+        }
+      };
+      
+      const output = document.getElementById('output');
+      output.textContent = JSON.stringify(content, null, 2);
+      output.classList.add('show');
+      
+      // Scroll to output
+      output.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    function copyJSON() {
+      const output = document.getElementById('output');
+      if (!output.textContent) {
+        alert('Please generate JSON first!');
+        return;
+      }
+      
+      navigator.clipboard.writeText(output.textContent).then(() => {
+        alert('JSON copied to clipboard! Paste it into src/data/content.json');
+      }).catch(() => {
+        alert('Could not copy. Please select and copy manually.');
+      });
+    }
+    
+    function downloadJSON() {
+      const output = document.getElementById('output');
+      if (!output.textContent) {
+        alert('Please generate JSON first!');
+        return;
+      }
+      
+      const blob = new Blob([output.textContent], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'content.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      alert('File downloaded! Move it to src/data/content.json in your project.');
+    }
+  </script>
+</body>
+</html>

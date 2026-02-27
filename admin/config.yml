@@ -1,0 +1,308 @@
+backend:
+  name: git-gateway
+  branch: main
+  # For GitHub: uncomment below and comment out git-gateway
+  # name: github
+  # repo: your-username/joy-of-learning-website
+
+# Enable editorial workflow for drafts
+publish_mode: editorial_workflow
+
+# Media folder where uploaded images will be stored
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+# Site URL for previews
+site_url: https://joyoflearning.co.in
+
+# Collections define the content types
+collections:
+  - name: "site"
+    label: "Site Settings"
+    files:
+      - name: "config"
+        label: "Site Configuration"
+        file: "src/data/content.json"
+        fields:
+          - label: "Site Title"
+            name: "site"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "URL", name: "url", widget: "string" }
+
+  - name: "hero"
+    label: "Hero Section"
+    files:
+      - name: "hero"
+        label: "Hero Content"
+        file: "src/data/content.json"
+        fields:
+          - label: "Hero Section"
+            name: "hero"
+            widget: "object"
+            fields:
+              - label: "Headline"
+                name: "headline"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - label: "Subheadline"
+                name: "subheadline"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "text" }
+                  - { label: "Hindi", name: "hi", widget: "text" }
+              - label: "CTA Primary Button"
+                name: "ctaPrimary"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - label: "CTA Secondary Button"
+                name: "ctaSecondary"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - { label: "Background Image", name: "backgroundImage", widget: "image" }
+
+  - name: "philosophy"
+    label: "Philosophy Section"
+    files:
+      - name: "philosophy"
+        label: "Philosophy Content"
+        file: "src/data/content.json"
+        fields:
+          - label: "Philosophy Section"
+            name: "philosophy"
+            widget: "object"
+            fields:
+              - label: "Label"
+                name: "label"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - label: "Headline"
+                name: "headline"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - label: "Body Text"
+                name: "body"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "text" }
+                  - { label: "Hindi", name: "hi", widget: "text" }
+              - { label: "Background Image", name: "backgroundImage", widget: "image" }
+              - label: "Principles"
+                name: "principles"
+                widget: "list"
+                fields:
+                  - { label: "Icon", name: "icon", widget: "select", options: ["Leaf", "Shield", "Flower2", "Check", "X"] }
+                  - label: "Title"
+                    name: "title"
+                    widget: "object"
+                    fields:
+                      - { label: "English", name: "en", widget: "string" }
+                      - { label: "Hindi", name: "hi", widget: "string" }
+                  - label: "Description"
+                    name: "description"
+                    widget: "object"
+                    fields:
+                      - { label: "English", name: "en", widget: "text" }
+                      - { label: "Hindi", name: "hi", widget: "text" }
+
+  - name: "organic"
+    label: "Organic Farming Section"
+    files:
+      - name: "organic"
+        label: "Organic Farming Content"
+        file: "src/data/content.json"
+        fields:
+          - label: "Organic Farming Section"
+            name: "organic"
+            widget: "object"
+            fields:
+              - label: "Label"
+                name: "label"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - label: "Headline"
+                name: "headline"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - label: "Body Text"
+                name: "body"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "text" }
+                  - { label: "Hindi", name: "hi", widget: "text" }
+              - { label: "Background Image", name: "backgroundImage", widget: "image" }
+
+  - name: "greenRevolution"
+    label: "Green Revolution Section"
+    files:
+      - name: "greenRevolution"
+        label: "Green Revolution Content"
+        file: "src/data/content.json"
+        fields:
+          - label: "Green Revolution Section"
+            name: "greenRevolution"
+            widget: "object"
+            fields:
+              - label: "Label"
+                name: "label"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - label: "Headline"
+                name: "headline"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - label: "Body Text"
+                name: "body"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "text" }
+                  - { label: "Hindi", name: "hi", widget: "text" }
+              - label: "Warning Message"
+                name: "warning"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "text" }
+                  - { label: "Hindi", name: "hi", widget: "text" }
+              - { label: "Background Image", name: "backgroundImage", widget: "image" }
+
+  - name: "practices"
+    label: "Practices Section"
+    files:
+      - name: "practices"
+        label: "Practices Content"
+        file: "src/data/content.json"
+        fields:
+          - label: "Practices Section"
+            name: "practices"
+            widget: "object"
+            fields:
+              - label: "Headline"
+                name: "headline"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - label: "Intro Text"
+                name: "intro"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "text" }
+                  - { label: "Hindi", name: "hi", widget: "text" }
+              - label: "Practice Blocks"
+                name: "blocks"
+                widget: "list"
+                fields:
+                  - { label: "Icon", name: "icon", widget: "select", options: ["RotateCw", "Layers", "Recycle", "Shovel"] }
+                  - { label: "Image", name: "image", widget: "image" }
+                  - label: "Title"
+                    name: "title"
+                    widget: "object"
+                    fields:
+                      - { label: "English", name: "en", widget: "string" }
+                      - { label: "Hindi", name: "hi", widget: "string" }
+                  - label: "Description"
+                    name: "description"
+                    widget: "object"
+                    fields:
+                      - { label: "English", name: "en", widget: "text" }
+                      - { label: "Hindi", name: "hi", widget: "text" }
+
+  - name: "recipes"
+    label: "Recipes Section"
+    files:
+      - name: "recipes"
+        label: "Recipes Content"
+        file: "src/data/content.json"
+        fields:
+          - label: "Recipes Section"
+            name: "recipes"
+            widget: "object"
+            fields:
+              - label: "Headline"
+                name: "headline"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - label: "Intro Text"
+                name: "intro"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "text" }
+                  - { label: "Hindi", name: "hi", widget: "text" }
+              - label: "Recipe Items"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "Icon", name: "icon", widget: "select", options: ["Droplets", "Leaf", "Sparkles", "Shield", "Zap", "Target"] }
+                  - { label: "Title", name: "title", widget: "string" }
+                  - label: "Description"
+                    name: "description"
+                    widget: "object"
+                    fields:
+                      - { label: "English", name: "en", widget: "text" }
+                      - { label: "Hindi", name: "hi", widget: "text" }
+
+  - name: "footer"
+    label: "Footer Section"
+    files:
+      - name: "footer"
+        label: "Footer Content"
+        file: "src/data/content.json"
+        fields:
+          - label: "Footer Section"
+            name: "footer"
+            widget: "object"
+            fields:
+              - label: "Headline"
+                name: "headline"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - label: "Body Text"
+                name: "body"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "text" }
+                  - { label: "Hindi", name: "hi", widget: "text" }
+              - label: "CTA Primary Button"
+                name: "ctaPrimary"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - label: "CTA Secondary Button"
+                name: "ctaSecondary"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - { label: "Email", name: "email", widget: "string" }
+              - label: "Location"
+                name: "location"
+                widget: "object"
+                fields:
+                  - { label: "English", name: "en", widget: "string" }
+                  - { label: "Hindi", name: "hi", widget: "string" }
+              - { label: "Background Image", name: "backgroundImage", widget: "image" }

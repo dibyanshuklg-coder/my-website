@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joy of Learning - Content Manager</title>
+  <link rel="stylesheet" href="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.css">
+  <style>
+    /* Custom styling for the CMS */
+    :root {
+      --primary-color: #C15C39;
+      --background-color: #F6F2EA;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    /* Custom logo in header */
+    .nc-appHeader-logo {
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+    }
+    
+    /* Custom button styling */
+    .nc-button {
+      border-radius: 999px;
+    }
+    
+    .nc-button-primary {
+      background-color: var(--primary-color);
+    }
+    
+    /* Card styling */
+    .nc-card {
+      border-radius: 16px;
+    }
+    
+    /* Input styling */
+    .nc-control-input {
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Load Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Load Decap CMS -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <script>
+    // Custom preview styles
+    CMS.registerPreviewStyle('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    // Optional: Add custom preview template for hero section
+    CMS.registerPreviewTemplate('hero', createClass({
+      render: function() {
+        const entry = this.props.entry;
+        return h('div', {style: {padding: '20px', background: '#F6F2EA'}},
+          h('h1', {style: {fontFamily: 'Caveat', fontSize: '3rem', color: '#2A2A2A'}}, 
+            entry.getIn(['data', 'hero', 'headline', 'en'])
+          ),
+          h('p', {style: {fontSize: '1.2rem', color: '#6E6A5C'}}, 
+            entry.getIn(['data', 'hero', 'subheadline', 'en'])
+          )
+        );
+      }
+    }));
+  </script>
+</body>
+</html>
